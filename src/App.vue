@@ -1,13 +1,37 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/auth">Login / SignUp</router-link>
+      <div v-if="isLoggedIn">
+        <router-link to="/">Dashboard</router-link> |
+        <router-link to="/about">About</router-link>
+      </div>
+      <router-link v-if="!isLoggedIn" to="/auth">Login / SignUp</router-link>
+      <br />
+      <button v-if="isLoggedIn" class="btn btn-danger" @click="signOut">
+        Abmelden
+      </button>
     </div>
     <router-view />
   </div>
 </template>
+
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+  },
+  methods: {
+    signOut() {
+      this.$store.commit("setUser", null);
+      this.$store.commit("setToken", null);
+      this.$router.push("/auth");
+    },
+  },
+});
+</script>
 
 <style>
 #app {
