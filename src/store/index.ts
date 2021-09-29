@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     user: localStorage.getItem("user"),
     token: localStorage.getItem("token"),
+    admin: false,
   },
   mutations: {
     setUser(state, user) {
@@ -24,6 +25,9 @@ export default new Vuex.Store({
         localStorage.removeItem("token");
       }
       state.token = token;
+    },
+    setAdmin(state, admin) {
+      state.admin = admin;
     },
   },
   actions: {},
