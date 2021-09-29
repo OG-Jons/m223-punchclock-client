@@ -36,7 +36,7 @@ export default {
   },
 
   async deleteEntry(id: number): Promise<void> {
-    return axios.delete(`${BASE_URL}/entries/${id}`, getConfig());
+    await axios.delete(`${BASE_URL}/entries/${id}`, getConfig());
   },
 
   async updateEntry(entry: EntryWithSplitDateAndTime): Promise<Entry> {
@@ -78,12 +78,26 @@ export default {
   },
 
   async deleteCategory(id: number): Promise<void> {
-    return await axios.delete(`${BASE_URL}/categories/${id}`, getConfig());
+    await axios.delete(`${BASE_URL}/categories/${id}`, getConfig());
   },
 
   async updateCategory(category: Category): Promise<Category> {
     return await axios
       .put(`${BASE_URL}/categories/${category.id}`, category, getConfig())
       .then((res) => res.data);
+  },
+
+  async getUsers(): Promise<User[]> {
+    return await axios
+      .get(`${BASE_URL}/users`, getConfig())
+      .then((res) => res.data);
+  },
+
+  async deleteUser(id: number): Promise<void> {
+    await axios.delete(`${BASE_URL}/users/${id}`, getConfig());
+  },
+
+  async setUserRole(id: number, user: User): Promise<User> {
+    return await axios.put(`${BASE_URL}/users/${id}`, user, getConfig());
   },
 };
