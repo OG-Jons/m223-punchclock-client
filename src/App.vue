@@ -3,7 +3,7 @@
     <div id="nav">
       <div v-if="isLoggedIn">
         <router-link to="/">Dashboard</router-link> |
-        <router-link to="/about">About</router-link>
+        <router-link to="/cat">Kategorien</router-link> |
       </div>
       <router-link v-if="!isLoggedIn" to="/auth">Login / SignUp</router-link>
       <br />

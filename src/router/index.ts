@@ -17,10 +17,10 @@ const routes: Array<RouteConfig> = [
     component: AuthInput,
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
+    path: "/cat",
+    name: "Categories",
+    component: CategoryManagement,
+  },
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
@@ -40,6 +40,9 @@ router.beforeEach((to, from, next) => {
     return next("/auth");
   }
 
+  if (to.path === "/cat" && !store.state.categories) {
+    return next("/");
+  }
   next();
 });
 
