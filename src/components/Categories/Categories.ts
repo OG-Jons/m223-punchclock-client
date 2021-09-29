@@ -17,6 +17,7 @@ export default Vue.extend({
     },
     async deleteCategory(id: number) {
       await APIService.deleteCategory(id);
+      this.categories = this.categories.filter((cat) => cat.id !== id);
     },
     async setCategory() {
       const newCategory = await APIService.setCategory(this.newCategory);
