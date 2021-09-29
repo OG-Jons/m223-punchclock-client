@@ -6,6 +6,8 @@ export default Vue.extend({
   data() {
     return {
       land: "This is dashboard",
+      user: this.$store.state.user,
+      admin: this.$store.state.admin,
     };
   },
   methods: {
