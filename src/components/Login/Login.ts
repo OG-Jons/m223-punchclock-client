@@ -1,5 +1,6 @@
 import Vue from "vue";
 import APIService from "@/service/APIService";
+import { User } from "@/model/User";
 
 export default Vue.extend({
   name: "Login",
@@ -7,19 +8,38 @@ export default Vue.extend({
     return {
       username: "",
       password: "",
+      showErrorAlert: {
+        show: false,
+        value: "",
+      },
     };
   },
   methods: {
     async signIn() {
-      const loginResponse = await APIService.signIn({
+      await APIService.signIn({
         username: this.username,
         password: this.password,
-      });
-      const user = await APIService.userData();
-      this.$store.commit("setUser", loginResponse.data);
-      this.$store.commit("setToken", loginResponse.headers.authorization);
-      this.$store.commit("setAdmin", user.roles.name === "Admin");
-      await this.$router.push("/");
+      })
+        .then(async (res) => {
+          await this.$store.commit("setUser", res.data);
+          await this.$store.commit("setToken", res.headers.authorization);
+          const user: User = await APIService.userData();
+          await this.$store.commit(
+            "setAdmin",
+            user.role ? user.role.name === "Admin" : false
+          );
+          await this.$router.push("/");
+          await this.$router.go(0);
+        })
+        .catch((err) => {
+          if (err.response.status === 403) {
+            this.showErrorAlert = {
+              show: true,
+              value:
+                "Falscher Benutzername oder Passwort. \n Bitte erneut versuchen.",
+            };
+          }
+        });
     },
   },
 });
