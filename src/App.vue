@@ -1,15 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
-      <div v-if="isLoggedIn">
+      <div v-if="isLoggedIn && isAdmin">
         <router-link to="/">Dashboard</router-link> |
         <router-link to="/cat">Kategorien</router-link> |
+        <router-link to="/user">Benutzer</router-link>
       </div>
       <router-link v-if="!isLoggedIn" to="/auth">Login / SignUp</router-link>
       <br />
-      <button v-if="isLoggedIn" class="btn btn-danger" @click="signOut">
-        Abmelden
-      </button>
     </div>
     <router-view />
   </div>
@@ -23,12 +21,13 @@ export default Vue.extend({
       return this.$store.getters.isLoggedIn;
     },
   },
-  methods: {
-    signOut() {
-      this.$store.commit("setUser", null);
-      this.$store.commit("setToken", null);
-      this.$router.push("/auth");
-    },
+  data() {
+    return {
+      isAdmin: false,
+    };
+  },
+  async created() {
+    this.isAdmin = await this.$store.getters.isAdmin;
   },
 });
 </script>
