@@ -7,7 +7,9 @@
             <h5 class="card-title text-center mb-5 fw-light fs-5">
               Registrieren
             </h5>
-
+            <b-alert v-model="showErrorAlert.show" variant="danger">
+              {{ showErrorAlert.value }}
+            </b-alert>
             <form @submit.prevent="signUp">
               <div class="form-floating mb-3">
                 <input

@@ -8,6 +8,10 @@ export default Vue.extend({
       username: "",
       password: "",
       confirmPassword: "",
+      showErrorAlert: {
+        show: false,
+        value: "",
+      },
       disabled: true,
     };
   },
@@ -23,7 +27,17 @@ export default Vue.extend({
       await APIService.signUp({
         username: this.username,
         password: this.password,
-      }).then(() => this.signIn());
+      })
+        .then(() => this.signIn())
+        .catch((err) => {
+          if (err.response.status === 409) {
+            this.showErrorAlert = {
+              show: true,
+              value:
+                "Es existiert bereits einen Benutzer mit diesem Benutzernamen",
+            };
+          }
+        });
     },
     async signIn() {
       const loginResponse = await APIService.signIn({
