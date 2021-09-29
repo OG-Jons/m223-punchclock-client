@@ -44,11 +44,15 @@ export default Vue.extend({
         username: this.username,
         password: this.password,
       });
+      await this.$store.commit("setUser", loginResponse.data);
+      await this.$store.commit("setToken", loginResponse.headers.authorization);
       const user = await APIService.userData();
-      this.$store.commit("setUser", loginResponse.data);
-      this.$store.commit("setToken", loginResponse.headers.authorization);
-      this.$store.commit("setAdmin", user.roles.name === "Admin");
+      await this.$store.commit(
+        "setAdmin",
+        user.role ? user.role.name === "Admin" : false
+      );
       await this.$router.push("/");
+      await this.$router.go(0);
     },
     validInput(): void {
       this.disabled = !!this.username && this.arePasswordsSame;
