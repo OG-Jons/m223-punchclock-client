@@ -1,5 +1,5 @@
 <template>
-  <button v-if="isLoggedIn" class="btn btn-danger" @click="signOut">
+  <button v-if="isLoggedIn" class="btn btn-danger mb-5" @click="signOut">
     Abmelden
   </button>
 </template>

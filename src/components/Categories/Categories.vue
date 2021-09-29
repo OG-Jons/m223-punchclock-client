@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Alle Kategorien</h3>
+    <h3>Kategorien Verwaltung</h3>
     <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">

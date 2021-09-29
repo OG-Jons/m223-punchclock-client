@@ -1,15 +1,11 @@
 import Vue from "vue";
 import APIService from "@/service/APIService";
-import SignOut from "@/components/SignOut/SignOut.vue";
 import { EntryWithSplitDateAndTime } from "@/model/EntryWithSplitDateAndTime";
 import { Entry } from "@/model/Entry";
 import { Category } from "@/model/Category";
 
 export default Vue.extend({
   name: "Dashboard",
-  components: {
-    SignOut,
-  },
   data() {
     return {
       user: this.$store.state.user,

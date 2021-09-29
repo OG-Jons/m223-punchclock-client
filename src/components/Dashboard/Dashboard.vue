@@ -3,7 +3,6 @@
     <h3>
       {{ admin ? "Alle Einträge" : `Alle Einträge von ${user}` }}
     </h3>
-    <SignOut />
     <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
