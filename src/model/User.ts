@@ -3,7 +3,7 @@ import { Role } from "@/model/Role";
 
 export interface User {
   username: string;
-  roles: Role;
+  role: Role;
   entries: Entry[];
   password: string;
 }
