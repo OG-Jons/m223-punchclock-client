@@ -2,8 +2,13 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import AuthInput from "../views/AuthInput.vue";
+import VueCookies from "vue-cookies";
+import CategoryManagement from "../views/CategoryManagement.vue";
+import store from "../store";
+import UserManagement from "@/views/UserManagement.vue";
 
 Vue.use(VueRouter);
+Vue.use(VueCookies);
 
 const routes: Array<RouteConfig> = [
   {
@@ -21,9 +26,10 @@ const routes: Array<RouteConfig> = [
     name: "Categories",
     component: CategoryManagement,
   },
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  {
+    path: "/user",
+    name: "Users",
+    component: UserManagement,
   },
 ];
 
@@ -36,13 +42,18 @@ router.beforeEach((to, from, next) => {
   const allowedPages = ["/auth"];
   const authRequired = !allowedPages.includes(to.path);
 
-  if (authRequired && !localStorage.getItem("token")) {
+  if (authRequired && !Vue.$cookies.get("token")) {
     return next("/auth");
+  }
+
+  if (allowedPages.includes(to.path) && Vue.$cookies.get("token")) {
+    return next("/");
   }
 
   if (to.path === "/cat" && !store.state.categories) {
     return next("/");
   }
+
   next();
 });
 
